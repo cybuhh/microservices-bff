@@ -11,15 +11,18 @@ var goodGuy = goodGuyLib({
         mustRevalidate: false            // - is it OK to return a stale response and fetch in the background?
     }
 });
+var jsonpath = require('jsonpath');
 
 /* GET home page. */
 router.get('/:isbn', function(req, res) {
-    goodGuy('https://book-catalog-proxy-4.herokuapp.com/book?isbn=' + req.params.isbn)
+    goodGuy('https://book-catalog-proxy-2.herokuapp.com/book?isbn=' + req.params.isbn)
       .then(function(result) {
-          res.json({
-              title: result.body.items[0].volumeInfo.title,
-              thumbnail: result.body.items[0].volumeInfo.imageLinks.smallThumbnail
-          });
+          var response = {
+              title: jsonpath.query(result.body, '$.items[*]..title'),
+              thumbnail: jsonpath.query(result.body, '$.items[*]..smallThumbnail')
+          };
+
+          res.json(response);
       })
       .catch(function (err) {
         console.error(err);
