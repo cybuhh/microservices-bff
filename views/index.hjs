@@ -7,5 +7,14 @@
   <body>
     <h1>{{ title }}</h1>
     <p>Welcome to {{ title }}</p>
+    <ul>
+    {{#items}}
+        {{> item}}
+        <li>
+            <p>{{volumeInfo.title}}</p>
+            <img src="{{volumeInfo.imageLinks.smallThumbnail}}" />
+        </li>
+    {{/items}}
+    <ul>
   </body>
 </html>
