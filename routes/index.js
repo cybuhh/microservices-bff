@@ -11,15 +11,30 @@ var goodGuy = goodGuyLib({
         mustRevalidate: false            // - is it OK to return a stale response and fetch in the background?
     }
 });
+var esi = require('nodesi');
 
 /* GET home page. */
 router.get('/', function(req, res) {
     goodGuy(process.env.API_URL + '/book/0596805527')
       .then(function(result) {
-        res.render('book', { title: 'Express', item: result.body,
-            partials: {
-                layout: 'layout'
-            }});
+          return new Promise(function(resolve, reject) {
+              res.render('book', { title: 'Express', item: result.body,
+                  partials: {
+                      layout: 'layout'
+                  }
+              }, function(err, html) {
+                  if (err) {
+                      return reject(err);
+                  }
+                  return resolve(html);
+              });
+          });
+      })
+      .then(function(html) {
+          return new esi().process(html);
+      })
+      .then(function(html) {
+          return res.send(html);
       })
       .catch(function (err) {
         console.error(err);

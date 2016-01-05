@@ -25,7 +25,21 @@ app.use(require('node-sass-middleware')({
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
-
+/*
+app.use(function(req, res, next) {
+  req.app.render = function(name, option, callback) {
+    return new Promise(function(resolve, reject) {
+      req.app.render(name, option, function(err, result) {
+        if (err) {
+          return reject(err);
+        }
+        resolve(new ESI().process(html));
+        next();
+      })
+    });
+  }
+});
+*/
 app.use('/', routes);
 app.use('/book', book);
 
@@ -59,6 +73,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;
