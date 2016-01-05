@@ -16,7 +16,10 @@ var goodGuy = goodGuyLib({
 router.get('/', function(req, res) {
     goodGuy(process.env.API_URL + '/book/0596805527')
       .then(function(result) {
-        res.render('index', { title: 'Express', item: result.body });
+        res.render('book', { title: 'Express', item: result.body,
+            partials: {
+                layout: 'layout'
+            }});
       })
       .catch(function (err) {
         console.error(err);

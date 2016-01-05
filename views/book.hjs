@@ -1,0 +1,6 @@
+{{<layout}}
+{{$content}}
+<img src="{{item.thumbnail}}">
+<div>{{item.title}}</div>
+{{/content}}
+{{/layout}}
