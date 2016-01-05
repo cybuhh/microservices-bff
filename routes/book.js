@@ -13,10 +13,13 @@ var goodGuy = goodGuyLib({
 });
 
 /* GET home page. */
-router.get('/', function(req, res) {
-    goodGuy(process.env.API_URL + '/book/0596805527')
+router.get('/:isbn', function(req, res) {
+    goodGuy('https://book-catalog-proxy-4.herokuapp.com/book?isbn=' + req.params.isbn)
       .then(function(result) {
-        res.render('index', { title: 'Express', item: result.body });
+          res.json({
+              title: result.body.items[0].volumeInfo.title,
+              thumbnail: result.body.items[0].volumeInfo.imageLinks.smallThumbnail
+          });
       })
       .catch(function (err) {
         console.error(err);
