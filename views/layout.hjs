@@ -1,6 +1,6 @@
 <html>
 <head>
-	<meta name="x-request-id" content="{{reqId}}">
+	<meta name="custom-request-id" content="{{reqId}}">
 </head>
 <body>
 <header><esi:include src="https://kwasniew.github.io/menu.html" /></header>

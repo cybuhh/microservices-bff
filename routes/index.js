@@ -35,7 +35,7 @@ router.get('/', function(req, res) {
       .then(function(html) {
           return new esi().process(html, {
               headers: {
-                  'x-request-id': reqId
+                  'custom-request-id': reqId
               }
           });
       })
