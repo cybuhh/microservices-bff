@@ -2,6 +2,6 @@
 {{$content}}
 <img src="{{item.thumbnail}}">
 <div>{{item.title}}</div>
-status: <b><esi:include src="http://uservices-book-prod.herokuapp.com/stock/12" /></b>
+status: <b><esi:include src="http://uservices-book-prod.herokuapp.com/stock/123456" /></b>
 {{/content}}
 {{/layout}}
