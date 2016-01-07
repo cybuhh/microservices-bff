@@ -15,11 +15,12 @@ var esi = require('nodesi');
 
 /* GET home page. */
 router.get('/', function(req, res) {
+    var reqId = req.headers['x-request-id'] || 'foo';
     goodGuy(process.env.API_URL + '/book/0596805527')
       .then(function(result) {
           return new Promise(function(resolve, reject) {
               res.render('book', { title: 'Express', item: result.body,
-                  reqId: req.headers['x-request-id'] || 'foo',
+                  reqId: reqId,
                   partials: {
                       layout: 'layout'
                   }
@@ -32,7 +33,11 @@ router.get('/', function(req, res) {
           });
       })
       .then(function(html) {
-          return new esi().process(html);
+          return new esi().process(html, {
+              headers: {
+                  'x-request-id': reqId
+              }
+          });
       })
       .then(function(html) {
           return res.send(html);
