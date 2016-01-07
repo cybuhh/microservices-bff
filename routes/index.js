@@ -19,7 +19,7 @@ router.get('/', function(req, res) {
       .then(function(result) {
           return new Promise(function(resolve, reject) {
               res.render('book', { title: 'Express', item: result.body,
-                  reqId: req.headers.x-request-id,
+                  reqId: req.headers['x-request-id'] || 'foo',
                   partials: {
                       layout: 'layout'
                   }
